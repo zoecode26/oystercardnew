@@ -7,12 +7,17 @@ attr_reader :entry_station, :single_journey
   end
 
   def end_journey(exit_station)
-    @single_journey = {:start => entry_station, :finish => exit_station }
+    puts "test"
+    @single_journey = {:start => @entry_station, :finish => exit_station }
     @entry_station = nil
+    puts @single_journey
   end
 
   def calculate_fare
-    MINIMUM_FARE
+    puts @single_journey
+    fare = @single_journey[:start].zone - @single_journey[:finish].zone
+    fare = fare.abs
+    fare += MINIMUM_FARE
   end
 
 end

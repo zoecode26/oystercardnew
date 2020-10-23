@@ -26,8 +26,8 @@ class Oystercard
 
   def touch_out(exit_station)
     unless calculate_fine(:out)
-      deduct(@log.current_journey.calculate_fare)
       @log.end_journey(exit_station)
+      deduct(@log.current_journey.calculate_fare)
     end
   end
 

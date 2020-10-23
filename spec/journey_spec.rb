@@ -12,11 +12,11 @@ RSpec.describe Journey do
 
   describe '#touch_in' do
     it 'checks if card in a journey' do
-      expect(@card.journey.in_journey).to eq true
+      expect(@card.log.in_journey).to eq true
     end
 
     it 'remembers entry station' do
-      expect(@card.journey.entry_station).to eq(entry_station)
+      expect(@card.log.current_journey.entry_station).to eq(entry_station)
     end
   end
 
@@ -26,13 +26,15 @@ RSpec.describe Journey do
       expect(@card.journey.nil?).to eq true
     end
 
-    it 'deducts money from balance' do
-      expect{@card.touch_out(exit_station)}.to change{@card.balance}.by(-1)
-    end
-
     it 'saves your list of journeys' do
       @card.touch_out(exit_station)
-      expect(@card.all_journeys[0].single_journey).to eq({:start => entry_station, :finish => exit_station})
+      expect(@card.log.all_journeys[0].single_journey).to eq({:start => entry_station, :finish => exit_station})
+    end
+
+    it 'calculates the fare' do
+      allow(entry_station).to receive(:zone).and_return(5)
+      allow(exit_station).to receive(:zone).and_return(1)
+      expect{@card.touch_out(exit_station)}.to change{@card.balance}.by(-5)
     end
   end
 end
