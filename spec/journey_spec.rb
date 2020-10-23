@@ -1,8 +1,8 @@
 require 'journey'
 
 RSpec.describe Journey do
-  let(:entry_station) {double("dalston station")}
-  let(:exit_station) {double("highgate station")}
+  let(:entry_station) {double(:name => "dalston station", :zone => 5)}
+  let(:exit_station) {double(:name => "highgate station", :zone => 1)}
 
   before(:example) do
     @card = Oystercard.new

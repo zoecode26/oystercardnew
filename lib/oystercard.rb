@@ -28,6 +28,8 @@ class Oystercard
     unless calculate_fine(:out)
       @log.end_journey(exit_station)
       deduct(@log.current_journey.calculate_fare)
+      ###SET JOURNEY TO BE NIL IN DEDUCTING FAIR METHOD INSTEAD
+
     end
   end
 
@@ -38,6 +40,7 @@ class Oystercard
   private
   def deduct(amount)
     @balance -= amount
+    @journey = nil
   end
 
   def calculate_fine(action)
